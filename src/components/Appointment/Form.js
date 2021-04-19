@@ -6,7 +6,7 @@ export default function Form(props) {
 
   console.log('form props', props)
   const [name, setName] = useState(props.name || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [interviewer, setInterviewer] = useState(props.interviewer ? props.interviewer.id : null);
 
   const reset = () => {
     setName("");
@@ -25,6 +25,7 @@ export default function Form(props) {
         className="appointment__create-input text--semi-bold"
         name={name}
         type="text"
+        value={name}
         placeholder="Enter Student Name"
         onChange={(event => {setName(event.target.value)})}
       />
