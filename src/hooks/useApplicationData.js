@@ -13,13 +13,14 @@ export default function useApplicationData() {
   
   const setDay = day => setState({ ...state, day });
   
+  const axiosCall = url => axios.get(url);
+
   useEffect(()=> {
   
     const urlDays = '/api/days';
     const urlAppointments = 'api/appointments';
     const urlInterviewers = 'api/interviewers';
   
-    const axiosCall = url => axios.get(url);
   
     Promise.all([axiosCall(urlDays), axiosCall(urlAppointments), axiosCall(urlInterviewers)])
       .then((all) => {
@@ -33,7 +34,7 @@ export default function useApplicationData() {
     }, []);
   
   function bookInterview(id, interview) {
-    console.log('interview', interview)
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -46,26 +47,30 @@ export default function useApplicationData() {
   
     const urlBook = `/api/appointments/${id}`;
   
-    return axios.put(urlBook, {interview})
-      .then(resolve => {
+    return Promise.all([axios.put(urlBook, {interview}),axiosCall('/api/days')]) 
+      .then(all => {
         console.log('resolved')
         setState(prev => ({
           ...prev,
+          days: all[1].data,
           appointments
         }))
-        return resolve;
+        return all;
       })
   
   };
   
   const cancelInterview = (id) => {
-    console.log('cancelInterview', id)
-    const interview = {interview: null};
+
     const urlDelete = `/api/appointments/${id}`;
   
-    return axios.delete(urlDelete)
-      .then(resolve => {
-        console.log('resolved', resolve)
+    return Promise.all([axios.delete(urlDelete), axiosCall('/api/days')])
+      .then(all => {
+        console.log('resolved')
+        setState(prev => ({
+          ...prev,
+          days: all[1].data
+        }))
       })
   
   }
