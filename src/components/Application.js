@@ -37,6 +37,44 @@ export default function Application(props) {
       });
     }, []);
 
+  function bookInterview(id, interview) {
+    console.log('interview', interview)
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    const urlBook = `/api/appointments/${id}`;
+
+    return axios.put(urlBook, {interview})
+      .then(resolve => {
+        console.log('resolved')
+        setState(prev => ({
+          ...prev,
+          appointments
+        }))
+        return resolve;
+      })
+
+  };
+
+  const cancelInterview = (id) => {
+    console.log('cancelInterview', id)
+    const interview = {interview: null};
+    const urlDelete = `/api/appointments/${id}`;
+
+    return axios.delete(urlDelete)
+      .then(resolve => {
+        console.log('resolved', resolve)
+      })
+
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
@@ -45,9 +83,13 @@ export default function Application(props) {
     return <Appointment 
       key={appointment.id} {...appointment} 
       interview={interview} 
-      interviewers={dailyInterviewers} 
+      interviewers={dailyInterviewers}
+      bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
     />;
   });
+
+
 
   return (
     <main className="layout">

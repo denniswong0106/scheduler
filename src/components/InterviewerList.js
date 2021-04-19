@@ -12,7 +12,6 @@ export default function InterviewerList(props) {
   // props.interviewer.length = the id of interviewer
   // props.setInterviewer = a function takes in interviewer id 
 
-  console.log(props);
   const Interviewers = props.interviewers.map(interviewer => {
     return <InterviewerListItem
     id={interviewer.id}
