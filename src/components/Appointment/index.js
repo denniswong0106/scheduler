@@ -12,7 +12,6 @@ import Error from "components/Appointment/Error"
 
 export default function Appointment(props) {
 
-
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -22,8 +21,6 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
-
-  console.log('Appoientment props', props)
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
