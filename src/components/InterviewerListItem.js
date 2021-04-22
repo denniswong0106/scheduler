@@ -7,7 +7,7 @@ export default function InterviewerListItem(props) {
     'interviewers__item--selected': props.selected
   });
 
-  const formatSelected = props.selected && <p>{props.name}</p>;
+  const formatSelected = props.selected && <p data-testid="selected">{props.name}</p>;
 
 
 
