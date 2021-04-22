@@ -32,6 +32,29 @@ export default function useApplicationData() {
         }))
       });
     }, []);
+
+  // gets the spots for a given day:
+  const getSpotsForDay = (dayObj, appointments) => {
+
+    let spots = 0;
+    dayObj.appointments.forEach(id => !appointments[id].interview && spots++)
+    return spots;
+  }
+
+  const updateSpots = (dayName, days, appointments) => {
+
+    // find the day object:
+    const dayObj = days.find(day => day.name === dayName);
+
+    // calculate the spots for given day:
+    const spots = getSpotsForDay(dayObj, appointments);
+
+    // update the new day object into state without mutating state:
+    const newDay = { ...dayObj, spots };
+    const newDays = days.map(day => day.name === dayName ? newDay : day);
+
+    return newDays;
+  }
   
   function bookInterview(id, interview) {
 
@@ -44,33 +67,45 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-  
+
     const urlBook = `/api/appointments/${id}`;
   
-    return Promise.all([axios.put(urlBook, {interview}),axiosGetCall('/api/days')]) 
-      .then(all => {
+    return axios.put(urlBook, {interview}) 
+      .then(response => {
         console.log('resolved')
-        setState(prev => ({
-          ...prev,
-          days: all[1].data,
-          appointments
-        }))
-        return all;
+        setState(prev => {
+          const days = updateSpots(prev.day, prev.days, appointments);
+          return {
+            ...prev,
+            appointments,
+            days
+          }
+        })
       })
   
   };
   
   const cancelInterview = (id) => {
 
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+  
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
     const urlDelete = `/api/appointments/${id}`;
   
-    return Promise.all([axios.delete(urlDelete), axiosGetCall('/api/days')])
-      .then(all => {
+    return axios.delete(urlDelete)
+      .then(response => {
         console.log('resolved')
-        setState(prev => ({
-          ...prev,
-          days: all[1].data
-        }))
+        setState(prev => {
+          const days = updateSpots(prev.day, prev.days, appointments);
+          return { ...prev, appointments, days }
+        })
       })
   
   }
