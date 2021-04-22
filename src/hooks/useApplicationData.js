@@ -13,16 +13,16 @@ export default function useApplicationData() {
   
   const setDay = day => setState({ ...state, day });
   
-  const axiosCall = url => axios.get(url);
+  const axiosGetCall = url => axios.get(url);
 
   useEffect(()=> {
   
     const urlDays = '/api/days';
-    const urlAppointments = 'api/appointments';
-    const urlInterviewers = 'api/interviewers';
+    const urlAppointments = '/api/appointments';
+    const urlInterviewers = '/api/interviewers';
   
   
-    Promise.all([axiosCall(urlDays), axiosCall(urlAppointments), axiosCall(urlInterviewers)])
+    Promise.all([axiosGetCall(urlDays), axiosGetCall(urlAppointments), axiosGetCall(urlInterviewers)])
       .then((all) => {
         setState(prev => ({
           ...prev,
@@ -47,7 +47,7 @@ export default function useApplicationData() {
   
     const urlBook = `/api/appointments/${id}`;
   
-    return Promise.all([axios.put(urlBook, {interview}),axiosCall('/api/days')]) 
+    return Promise.all([axios.put(urlBook, {interview}),axiosGetCall('/api/days')]) 
       .then(all => {
         console.log('resolved')
         setState(prev => ({
@@ -64,7 +64,7 @@ export default function useApplicationData() {
 
     const urlDelete = `/api/appointments/${id}`;
   
-    return Promise.all([axios.delete(urlDelete), axiosCall('/api/days')])
+    return Promise.all([axios.delete(urlDelete), axiosGetCall('/api/days')])
       .then(all => {
         console.log('resolved')
         setState(prev => ({

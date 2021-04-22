@@ -28,10 +28,6 @@ const getInterviewersForDay = (state, day) => {
 
 const getInterview = (state, interview) => {
   
-
-
-  // console.log('interviewerId', interviewerId);
-  // console.log('isnterviewerObj', interviewerObj)
   
   if (!interview) {
     return null
