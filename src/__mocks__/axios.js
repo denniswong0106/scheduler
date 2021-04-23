@@ -27,7 +27,7 @@ const fixtures = {
       time: "2pm",
       interview: { student: "Leopold Silvers", interviewer: 4 }
     },
-    "4": { id: 4, time: "3pm", interview: null }
+    "4": { id: 4, time: "3pm", interview: null } 
   },
   interviewers: {
     "1": {

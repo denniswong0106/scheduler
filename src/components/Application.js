@@ -1,13 +1,17 @@
-import React, {useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment/index.js";
-import {getInterviewersForDay, getAppointmentsForDay, getInterview} from "helpers/selectors.js";
+import {
+  getInterviewersForDay,
+  getAppointmentsForDay,
+  getInterview
+} from "helpers/selectors.js";
 import useApplicationData from "../hooks/useApplicationData";
-export default function Application(props) {
 
+export default function Application(props) {
   const {
     state,
     setDay,
@@ -20,13 +24,16 @@ export default function Application(props) {
 
   const mapAppointments = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    return <Appointment 
-      key={appointment.id} {...appointment} 
-      interview={interview} 
-      interviewers={dailyInterviewers}
-      bookInterview={bookInterview}
-      cancelInterview={cancelInterview}
-    />;
+    return (
+      <Appointment
+        key={appointment.id}
+        {...appointment}
+        interview={interview}
+        interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
+    );
   });
 
   return (
@@ -39,11 +46,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-        <DayList
-          days={state.days}
-          day={state.day}
-          setDay={setDay}
-        />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -51,12 +54,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">
-        {mapAppointments}
-      </section>
-
-      
+      <section className="schedule">{mapAppointments}</section>
     </main>
-    
   );
 }

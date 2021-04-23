@@ -4,13 +4,10 @@ import "components/Button.scss";
 import classNames from "classnames";
 
 export default function Button(props) {
-
-
-  let buttonClass = classNames('button', {
-    'button--confirm': props.confirm,
-    'button--danger': props.danger
-  })
-
+  let buttonClass = classNames("button", {
+    "button--confirm": props.confirm,
+    "button--danger": props.danger
+  });
 
   return (
     <button
@@ -22,7 +19,3 @@ export default function Button(props) {
     </button>
   );
 }
-
-// classNames('foo', 'bar'); // => 'foo bar'
-// classNames('foo', { bar: true }); // => 'foo bar'
-// classNames('foo', { bar: false }); // => 'foo'
