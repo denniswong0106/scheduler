@@ -18,9 +18,13 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+  // get the appointments and interviewers for given day state
+  // we use this data to show what appointments are booked for a given day
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
+  // loop through each appointment and pass in
+  // relevant props for appointment/index to handle displaying
   const mapAppointments = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     return (

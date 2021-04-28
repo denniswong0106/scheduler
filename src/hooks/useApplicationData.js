@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// This function handles much of the logic and data handling
+// of the Application.js file. This file handles all the axios requests
+// of this app.
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: "Monday",
@@ -39,6 +42,7 @@ export default function useApplicationData() {
     return spots;
   };
 
+  // Function that updates the spots remaining for given day
   const updateSpots = (dayName, days, appointments) => {
     // find the day object:
     const dayObj = days.find((day) => day.name === dayName);
@@ -53,6 +57,7 @@ export default function useApplicationData() {
     return newDays;
   };
 
+  // function thate makes Axios put request to book interview
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -78,6 +83,7 @@ export default function useApplicationData() {
     });
   }
 
+  // axios request to delete interview
   const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],

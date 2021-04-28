@@ -10,6 +10,10 @@ import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
 import Error from "components/Appointment/Error";
 
+// The Appointment function handles how each appointment is displayed,
+// which visual mode it is in, and handles the
+// saving, editing, and deleting of interviews
+
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -21,10 +25,12 @@ export default function Appointment(props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
 
+  // set initial history as "SHOW" if interview is booked, "EMPTY" otherwise
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+  // Function that allows user to save appointment details
   const save = (name, interviewer) => {
     const interview = {
       student: name,
@@ -39,6 +45,9 @@ export default function Appointment(props) {
         transition(SHOW);
       })
       .catch((error) => {
+        // The second argument allows for history the replace
+        // the current history item with the new history item,
+        // as opposed to adding to history array.
         transition(ERROR_SAVE, true);
       });
   };

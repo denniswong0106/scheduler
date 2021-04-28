@@ -4,6 +4,9 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   const transition = (newHistory, replace = false) => {
+    // The second argument, if true, allows transition to replace
+    // the last history item with the new history item, as opposed
+    // to adding the new item to the existing history array
     if (replace) {
       setHistory((prev) => {
         const newArr = prev.slice(0, -1);
@@ -16,6 +19,8 @@ export default function useVisualMode(initial) {
     }
   };
 
+  // Function that sets the history state to go back
+  // to the last history (ie. remove the last added item in array)
   const back = () => {
     if (history.length > 1) {
       setHistory((prev) => {
