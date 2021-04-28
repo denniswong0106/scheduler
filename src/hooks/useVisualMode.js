@@ -9,6 +9,7 @@ export default function useVisualMode(initial) {
     // to adding the new item to the existing history array
     if (replace) {
       setHistory((prev) => {
+        // slice creates a copy of the history array with last item removed
         const newArr = prev.slice(0, -1);
         return [...newArr, newHistory];
       });
