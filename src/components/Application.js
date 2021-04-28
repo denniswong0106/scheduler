@@ -30,7 +30,8 @@ export default function Application(props) {
     return (
       <Appointment
         key={appointment.id}
-        {...appointment}
+        id={appointment.id}
+        time={appointment.time}
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
