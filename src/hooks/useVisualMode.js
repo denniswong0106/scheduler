@@ -31,9 +31,8 @@ export default function useVisualMode(initial) {
   };
 
   // As mode is always the last item in history array
-  // use .slice to create a copy of history
   // set mode as last item in history
-  let mode = history.slice(-1)[0];
+  const mode = history[history.length - 1];
 
   return { mode, transition, back };
 }

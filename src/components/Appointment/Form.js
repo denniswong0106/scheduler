@@ -19,8 +19,10 @@ export default function Form(props) {
   // props.onCancel() calls the back function defined in useVisualMode, passed in through appointment/index.js
 
   const cancel = () => {
-    props.onCancel();
-    reset();
+    if (props.onCancel) {
+      props.onCancel();
+      reset();
+    }
   };
 
   // Function that checks if name input is valid
@@ -31,7 +33,9 @@ export default function Form(props) {
     }
 
     setError("");
-    props.onSave(name, interviewer);
+    if (props.onSave) {
+      props.onSave(name, interviewer);
+    }
   }
 
   return (
