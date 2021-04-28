@@ -1,5 +1,6 @@
 import React from "react";
 
+// creates the error display to user (ie. when user cannot connect to database)
 export default function Error(props) {
   return (
     <main className="appointment__card appointment__card--error">

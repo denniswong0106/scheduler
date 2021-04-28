@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
@@ -74,17 +74,13 @@ export default function Appointment(props) {
         />
       )}
       {mode === CREATE && (
-        <Form
-          interviewers={props.interviewers}
-          onSave={save}
-          onCancel={(event) => back()}
-        />
+        <Form interviewers={props.interviewers} onSave={save} onCancel={back} />
       )}
       {mode === EDIT && (
         <Form
           interviewers={props.interviewers}
           onSave={save}
-          onCancel={(event) => back()}
+          onCancel={back}
           name={props.interview.student}
           interviewer={props.interview.interviewer}
         />
@@ -95,7 +91,7 @@ export default function Appointment(props) {
         <Confirm
           message={`Are you sure you want to delete this booking with ${props.interview.interviewer.name}?`}
           onConfirm={deleteInterview}
-          onCancel={(event) => back()}
+          onCancel={back}
         />
       )}
       {mode === ERROR_SAVE && <Error message={"cannot save"} onClose={back} />}

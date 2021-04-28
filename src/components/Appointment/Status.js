@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function Saving(props) {
+// creates the status animation when loading axios calls to update page
+export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">
       <img
